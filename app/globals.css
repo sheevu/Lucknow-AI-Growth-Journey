@@ -24,14 +24,15 @@ img { max-width: 100%; height: auto; }
 
 .ink-progress { position: fixed; z-index: 100; inset: 0 auto auto 0; height: 5px; background: linear-gradient(90deg,var(--orange),var(--pink),var(--purple),var(--cyan)); box-shadow: 0 2px 0 var(--ink); }
 .comic-nav { position: absolute; z-index: 20; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(20px,5vw,72px); }
-.comic-brand { display: flex; align-items: center; gap: 8px; color: var(--navy); font-size: 13px; letter-spacing: .04em; }
-.brand-copy { display: grid; gap: 1px; }
-.brand-copy small { font-size: 8px; font-weight: 900; letter-spacing: .13em; }
-.comic-brand > span:first-child { display: grid; place-items: center; width: 42px; height: 42px; border: var(--line); border-radius: 13px 7px 12px 8px; color: white; background: linear-gradient(135deg,var(--blue),var(--purple)); font-family: Impact,"Arial Black",sans-serif; font-size: 24px; box-shadow: 4px 4px 0 var(--ink); transform: rotate(-3deg); }
-.comic-brand b { font-family: Impact,"Arial Black",sans-serif; font-size: 16px; letter-spacing: .06em; }
-.comic-nav > .comic-brand { padding: 9px 15px 9px 9px; border: 3px solid var(--ink); border-radius: 14px 19px 13px 18px; color: var(--navy); background: rgba(255,253,244,.95); box-shadow: 5px 5px 0 var(--ink); }
+.comic-brand { display: flex; align-items: center; gap: 10px; color: var(--navy); font-size: 13px; letter-spacing: .04em; }
+.brand-copy { display: flex; flex-direction: column; gap: 2px; }
+.brand-copy small { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9.5px; font-weight: 800; letter-spacing: .16em; line-height: 1.2; text-transform: uppercase; }
+.comic-brand > span:first-child { display: grid; place-items: center; width: 44px; height: 44px; border: var(--line); border-radius: 12px; color: white; background: linear-gradient(135deg,var(--blue),var(--purple)); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Arial Black", sans-serif; font-size: 22px; font-weight: 900; line-height: 1; box-shadow: 4px 4px 0 var(--ink); transform: rotate(-3deg); -webkit-font-smoothing: antialiased; }
+.comic-brand b { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; font-weight: 900; letter-spacing: .06em; line-height: 1.15; text-transform: uppercase; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+.comic-nav > .comic-brand { padding: 9px 16px 9px 10px; border: 3px solid var(--ink); border-radius: 14px 19px 13px 18px; color: var(--navy); background: rgba(255,253,244,.98); box-shadow: 5px 5px 0 var(--ink); transition: transform .2s ease, box-shadow .2s ease; }
+.comic-nav > .comic-brand:hover { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--ink); }
 .comic-nav .brand-copy { width: auto; height: auto; color: var(--navy); }
-.comic-nav .brand-copy small { color: #555f7e; }
+.comic-nav .brand-copy small { color: #344265; font-weight: 800; }
 .comic-links { display: flex; align-items: center; gap: 25px; font-size: 11px; font-weight: 900; }
 .mobile-index { display: none; }
 .comic-links a { position: relative; }
@@ -297,7 +298,11 @@ img { max-width: 100%; height: auto; }
 .purple-button { color: white; background: var(--purple); }
 .finale > button { margin-top: 30px; padding: 8px 3px; border: 0; border-bottom: 3px solid var(--ink); background: transparent; cursor: pointer; font: inherit; font-size: 10px; font-weight: 1000; }
 .comic-footer { display: grid; grid-template-columns: .7fr 1.3fr; align-items: start; gap: 44px; padding: 54px clamp(20px,5vw,72px) 28px; border-top: 5px solid var(--ink); color: white; background: var(--ink); font-size: 10px; }
-.comic-footer .comic-brand,.comic-footer .brand-copy { color: white; }.comic-footer p { max-width: 330px; margin: 18px 0 0; color: #b8c3e6; line-height: 1.65; }
+.comic-footer .comic-brand { display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
+.comic-footer .comic-brand > span:first-child { border: 2.5px solid white; box-shadow: 4px 4px 0 var(--orange); }
+.comic-footer .comic-brand b { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 18px; font-weight: 900; letter-spacing: .06em; line-height: 1.15; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.comic-footer .brand-copy small { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--yellow); font-size: 10px; font-weight: 800; letter-spacing: .16em; margin-top: 2px; }
+.comic-footer p { max-width: 380px; margin: 16px 0 0; color: #c4d2f8; font-size: 12px; font-weight: 600; line-height: 1.65; }
 .footer-brand-block { display: block; }
 .footer-cta-panel { display: grid; gap: 24px; }
 .footer-cta-heading small { color: var(--cyan); font-size: 9px; font-weight: 1000; letter-spacing: .14em; }
@@ -338,8 +343,8 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 720px) {
   html,body,main { width: 100%; max-width: 100%; overflow-x: hidden; }
   .comic-nav { position: relative; inset: auto; min-height: 68px; gap: 10px; padding: 10px 16px; border-bottom: 3px solid var(--ink); background: var(--paper); }
-  .comic-nav .comic-brand { min-width: 0; flex: 1; padding: 7px 10px 7px 7px; box-shadow: 3px 3px 0 var(--ink); }.comic-brand b { font-size: 12px; }.brand-copy small { font-size: 7px; }
-  .comic-nav .comic-brand > span:first-child { flex: 0 0 40px; width: 40px; height: 40px; }
+  .comic-nav .comic-brand { min-width: 0; flex: 1; padding: 7px 12px 7px 8px; box-shadow: 3px 3px 0 var(--ink); }.comic-brand b { font-size: 14px; letter-spacing: .04em; }.brand-copy small { font-size: 8.5px; letter-spacing: .12em; }
+  .comic-nav .comic-brand > span:first-child { flex: 0 0 38px; width: 38px; height: 38px; font-size: 20px; }
   .comic-links { flex: 0 0 auto; }
   .comic-links a:not(.nav-pop) { display: none; }
   .nav-pop { min-height: 42px; display: inline-flex; align-items: center; padding-inline: 12px; font-size: 8px; white-space: nowrap; box-shadow: 3px 3px 0 var(--orange); }
@@ -425,8 +430,9 @@ img { max-width: 100%; height: auto; }
 
 @media (max-width: 390px) {
   .comic-nav { gap: 10px; padding-inline: 14px; }
-  .comic-brand b { font-size: 10px; }
-  .comic-brand > span { width: 38px; height: 38px; font-size: 21px; }
+  .comic-brand b { font-size: 12.5px; }
+  .brand-copy small { font-size: 8px; }
+  .comic-brand > span { width: 34px; height: 34px; font-size: 18px; }
   .nav-pop { padding-inline: 9px; white-space: nowrap; }
   .comic-hero { padding-inline: 16px; }
   .comic-hero h1 { font-size: clamp(3.55rem,19.5vw,4.65rem); }
@@ -598,7 +604,7 @@ img { max-width: 100%; height: auto; }
 
 @media (max-width: 760px) {
   .library-nav { min-height: 70px; padding: 10px 16px; }
-  .library-nav .comic-brand { min-width: 0; }.library-nav .comic-brand > span:first-child { flex: 0 0 40px; width: 40px; height: 40px; }.library-nav .comic-brand b { font-size: 11px; }.library-nav .brand-copy small { font-size: 6px; }
+  .library-nav .comic-brand { min-width: 0; }.library-nav .comic-brand > span:first-child { flex: 0 0 38px; width: 38px; height: 38px; font-size: 19px; }.library-nav .comic-brand b { font-size: 13.5px; }.library-nav .brand-copy small { font-size: 8.5px; }
   .library-nav-links > a:not(.nav-pop) { display: none; }.library-nav-links .nav-pop { min-height: 40px; padding-inline: 10px; font-size: 8px; }
   .library-mobile-nav { position: sticky; z-index: 25; top: 0; display: flex; gap: 8px; overflow-x: auto; padding: 8px 14px; border-bottom: 3px solid var(--ink); background: white; scrollbar-width: none; }
   .library-mobile-nav a { flex: 0 0 auto; min-height: 38px; display: flex; align-items: center; padding: 0 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); font-size: 8px; font-weight: 1000; }
