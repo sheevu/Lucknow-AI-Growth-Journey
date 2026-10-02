@@ -34,6 +34,7 @@ export type BlogArticle = {
   wordCount: number;
   blocks: BlogBlock[];
   relatedIds: number[];
+  previousSlugs?: string[];
   coverImage?: string;
   coverAlt?: string;
 };
@@ -44,6 +45,15 @@ export const categories = data.categories;
 export const articles = data.articles.map((article) => ({ ...article, canonical: siteUrl(`/blogs/${article.slug}/`) }));
 export const publishedArticles = articles.filter((article) => article.status === "published");
 export const indexableArticles = articles.filter((article) => article.status === "published" && article.indexable);
+
+export const boxMarketingImages = Array.from({ length: 20 }, (_, i) => `/box-marketing/marketing-${String(i + 1).padStart(2, "0")}.webp`);
+export const boxAvatarImages = Array.from({ length: 22 }, (_, i) => `/box-covers/avatar-${String(i + 1).padStart(2, "0")}.webp`);
+export const allBoxImages = [...boxMarketingImages, ...boxAvatarImages];
+
+export function getRandomBoxImage(seed = 0): string {
+  const index = Math.abs((seed * 19 + 7)) % allBoxImages.length;
+  return allBoxImages[index];
+}
 
 export const categoryImages: Record<string, string> = {
   "retail-fmcg-quick-commerce": "/library/marketing-collage.webp",
@@ -59,7 +69,7 @@ export const categoryImages: Record<string, string> = {
 };
 
 export function getArticle(slug: string) {
-  return articles.find((article) => article.slug === slug);
+  return articles.find((article) => article.slug === slug || article.previousSlugs?.includes(slug));
 }
 
 export function getArticleById(id: number) {

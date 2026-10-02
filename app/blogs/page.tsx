@@ -54,6 +54,30 @@ export default function BlogsPage() {
         </div>
       </header>
 
+      <div className="hero-keywords-bar" style={{ margin: "30px clamp(24px,6vw,95px) 0", background: "white" }} aria-label="Sudarshan AI Services">
+        <small>SUDARSHAN AI · CORE CAPABILITIES &amp; AGENCY SOLUTIONS</small>
+        <div className="hero-keywords-list">
+          <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+            ⚡ Digital Marketing services
+          </a>
+          <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+            📍 Social Media Marketing in Lucknow
+          </a>
+          <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+            🔍 SEO &amp; Local Search
+          </a>
+          <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+            🎯 Lead Generation
+          </a>
+          <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+            🏆 best digital marketing services
+          </a>
+          <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+            🏢 marketing agency
+          </a>
+        </div>
+      </div>
+
       <section className="library-featured" id="featured">
         <div className="library-section-heading inverse"><span>EDITOR&apos;S BOARD</span><h2>FEATURED STORIES</h2><p>Three useful starting points from the complete archive.</p></div>
         <div className="library-card-grid library-featured-grid">{featured.map((article) => <BlogArticleCard key={article.id} article={article} />)}</div>

@@ -3,6 +3,23 @@ import Link from "next/link";
 export function BlogSiteHeader() {
   return (
     <>
+      <div className="ecosystem-banner" aria-label="Sudarshan AI Growth Ecosystem">
+        <div className="ecosystem-inner">
+          <span className="ecosystem-tag">SUDARSHAN AI</span>
+          <span className="ecosystem-text">Strategic Services:</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Digital Marketing services</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Social Media Marketing in Lucknow</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SEO</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Lead Generation</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">best digital marketing services</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">marketing agency</a>
+        </div>
+      </div>
       <nav className="library-nav" aria-label="Primary navigation">
         <Link className="comic-brand" href="/">
           <span>S</span>

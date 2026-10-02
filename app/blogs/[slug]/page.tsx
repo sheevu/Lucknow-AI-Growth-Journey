@@ -1,7 +1,8 @@
+import React from "react";
 import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { BlogArticleCard } from "@/components/BlogArticleCard";
 import { BlogSiteFooter } from "@/components/BlogSiteFooter";
 import { BlogSiteHeader } from "@/components/BlogSiteHeader";
@@ -10,6 +11,7 @@ import {
   articleExcerpt,
   articleImage,
   articles,
+  boxMarketingImages,
   categories,
   categoryCount,
   formatArticleDate,
@@ -21,7 +23,12 @@ import {
 } from "@/lib/blogs";
 
 export function generateStaticParams() {
-  return [...articles.map((article) => ({ slug: article.slug })), ...categories.map((category) => ({ slug: category.slug }))];
+  const articleParams = articles.flatMap((article) => [
+    { slug: article.slug },
+    ...(article.previousSlugs || []).map((prev) => ({ slug: prev })),
+  ]);
+  const categoryParams = categories.map((category) => ({ slug: category.slug }));
+  return [...articleParams, ...categoryParams];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -123,19 +130,51 @@ function ArticlePage({ slug }: { slug: string }) {
           <p><b>Category</b><Link href={`/blogs/${article.category}/`}>{categoryName}</Link></p>
           <p><b>Original status</b>{article.status === "draft" ? "Draft in archive" : `Published ${formatArticleDate(article.date)}`}</p>
           {article.mediumUrl && <a className="sidebar-link" href={article.mediumUrl} target="_blank" rel="noreferrer">View original Medium post ↗</a>}
-          <a className="sidebar-cta" href="https://vyapai.in/" target="_blank" rel="noreferrer">GROW YOUR BUSINESS ↗</a>
+          
+          <div className="sidebar-agency-box">
+            <small>GROWTH ACCELERATOR</small>
+            <h3>SUDARSHAN AI</h3>
+            <p>
+              Scale your brand with premier{" "}
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Digital Marketing services</a>, high-ranking{" "}
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SEO</a>, and result-focused{" "}
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Social Media Marketing in Lucknow</a>. Partner with our{" "}
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">marketing agency</a> for predictable{" "}
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Lead Generation</a>.
+            </p>
+            <a className="sidebar-cta" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SCALE WITH SUDARSHAN AI ↗</a>
+          </div>
         </aside>
         <article className="article-content">
           {!article.indexable && <div className="review-notice"><b>ARCHIVE REVIEW NOTE</b><p>This entry is preserved for completeness but excluded from search indexing because the source marks it as a draft, placeholder, empty item or very short post. It needs an editorial review before canonical publication.</p></div>}
           {article.blocks.length ? article.blocks.map((block, index) => {
-            if (block.type === "heading") return <h2 key={index}>{block.text}</h2>;
-            if (block.type === "quote") return <blockquote key={index}>{block.text}</blockquote>;
-            if (block.type === "list") return <ul key={index}>{block.items.map((item, itemIndex) => <li key={itemIndex}><RichText text={item} /></li>)}</ul>;
-            return <p key={index}><RichText text={block.text} /></p>;
+            const visualBreakpoint = Math.min(2, Math.max(1, Math.floor(article.blocks.length / 3)));
+            const inlineVisual = index === visualBreakpoint && boxMarketingImages.length > 0 ? (
+              <figure key="box-marketing-visual" className="article-inline-visual">
+                <img
+                  src={boxMarketingImages[(article.id * 7) % boxMarketingImages.length]}
+                  alt={`${article.title} - Sudarshan AI Marketing Visual`}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  <span>SUDARSHAN AI GROWTH</span>
+                  Discover the <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">best digital marketing services</a>, cutting-edge{" "}
+                  <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SEO</a>, and data-driven{" "}
+                  <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Lead Generation</a> systems engineered by Lucknow&apos;s leading{" "}
+                  <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">marketing agency</a>.
+                </figcaption>
+              </figure>
+            ) : null;
+
+            if (block.type === "heading") return <React.Fragment key={index}><h2 key={index}>{block.text}</h2>{inlineVisual}</React.Fragment>;
+            if (block.type === "quote") return <React.Fragment key={index}><blockquote key={index}>{block.text}</blockquote>{inlineVisual}</React.Fragment>;
+            if (block.type === "list") return <React.Fragment key={index}><ul key={index}>{block.items.map((item, itemIndex) => <li key={itemIndex}><RichText text={item} /></li>)}</ul>{inlineVisual}</React.Fragment>;
+            return <React.Fragment key={index}><p key={index}><RichText text={block.text} /></p>{inlineVisual}</React.Fragment>;
           }) : <div className="empty-article"><h2>Source content unavailable</h2><p>The PDF archive contains a record for this entry but no extractable article body. The URL is reserved so the article is not silently lost.</p></div>}
 
           <section className="article-author-box">
-            <span>LD</span><div><small>EDITORIAL IDENTITY &amp; PUBLISHER</small><h2>Lucknow AI Digital Journey Editorial Desk</h2><p>Published from Lucknow, Uttar Pradesh by Vyapai, delivering practical AI adoption frameworks, SEO and local marketing playbooks, and modern retail strategies for MSMEs and small businesses across India.</p><Link href="/blogs/">VIEW ALL 140 ARTICLES ↗</Link></div>
+            <span>LD</span><div><small>EDITORIAL IDENTITY &amp; PUBLISHER</small><h2>Lucknow AI Digital Journey Editorial Desk</h2><p>Published from Lucknow, Uttar Pradesh by Vyapai and Sudarshan AI Labs, delivering practical AI adoption frameworks, SEO and local marketing playbooks, and modern retail strategies for MSMEs and small businesses across India.</p><Link href="/blogs/">VIEW ALL 140 ARTICLES ↗</Link></div>
           </section>
           <section className="article-pathways"><small>CONTINUE THE TOPIC</small><h2>Useful next reads</h2>{related.slice(0, 5).map((item) => <Link key={item.id} href={`/blogs/${item.slug}/`}><span>{getCategoryName(item.category)}</span><b>{item.title}</b><i>↗</i></Link>)}</section>
         </article>
@@ -150,6 +189,12 @@ function ArticlePage({ slug }: { slug: string }) {
 export default async function BlogOrCategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   if (getCategory(slug)) return <CategoryPage slug={slug} />;
-  if (getArticle(slug)) return <ArticlePage slug={slug} />;
+  const article = getArticle(slug);
+  if (article) {
+    if (article.slug !== slug) {
+      permanentRedirect(`/blogs/${article.slug}/`);
+    }
+    return <ArticlePage slug={article.slug} />;
+  }
   notFound();
 }

@@ -46,3 +46,9 @@ test('the prefix deployment serves cover images without requiring domain-root ro
   assert.equal(response.status, 200);
   assert.ok((await response.arrayBuffer()).byteLength > 1000);
 });
+test('serves box marketing visual assets', async () => {
+  const response = await request('/box-marketing/marketing-01.webp');
+  assert.equal(response.status, 200);
+  assert.ok((await response.arrayBuffer()).byteLength > 1000);
+});
+

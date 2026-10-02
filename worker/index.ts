@@ -77,7 +77,7 @@ const worker = {
       }
       return new Response(lines.join("\n") + "\n", { headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "public, max-age=3600" } });
     }
-    if (env.ASSETS && (/^\/(?:assets|box-covers|storyboard|blog-visuals|library|trends)\/|^\/(?:favicon\.svg|og\.png|file\.svg|globe\.svg|window\.svg|schema\.org\.jsonld|public_sitemap_enhanced\.xml)$/.test(localPath) || /\.(?:css|js|mjs|map|png|jpg|jpeg|webp|gif|svg|ico|woff2?|ttf)$/.test(localPath))) {
+    if (env.ASSETS && (/^\/(?:assets|box-covers|box-marketing|storyboard|blog-visuals|library|trends)\/|^\/(?:favicon\.svg|logo\.png|og\.png|file\.svg|globe\.svg|window\.svg|schema\.org\.jsonld|public_sitemap_enhanced\.xml)$/.test(localPath) || /\.(?:css|js|mjs|map|png|jpg|jpeg|webp|gif|svg|ico|woff2?|ttf)$/.test(localPath))) {
       const assetUrl = new URL(request.url);
       assetUrl.pathname = localPath;
       return env.ASSETS.fetch(new Request(assetUrl, request));

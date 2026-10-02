@@ -7,7 +7,7 @@ import { MediumRssWidget } from "@/components/MediumRssWidget";
 import { FooterLocationMap } from "@/components/FooterLocationMap";
 
 const serviceUrl = "https://vyapai.in/";
-const labsUrl = "https://sudarshan-ai-labs-lucknow.sheevumgoel.chatgpt.site/";
+const labsUrl = "https://sudarshan-ai.com/";
 const linkedinUrl = "https://www.linkedin.com/in/sheevumgoel";
 const founderUrl = "https://sheevum-goel-about.netlify.app/";
 const mediumUrl = "https://medium.com/@sheevumgoel";
@@ -158,6 +158,24 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(mediumListSchema) }} />
       <div className="ink-progress" style={{ width: `${progress}%` }} aria-hidden="true" />
 
+      <div className="ecosystem-banner" aria-label="Sudarshan AI Growth Ecosystem">
+        <div className="ecosystem-inner">
+          <span className="ecosystem-tag">SUDARSHAN AI</span>
+          <span className="ecosystem-text">Strategic Services:</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Digital Marketing services</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Social Media Marketing in Lucknow</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SEO</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Lead Generation</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">best digital marketing services</a>
+          <span className="eco-sep">•</span>
+          <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">marketing agency</a>
+        </div>
+      </div>
+
       <nav className="comic-nav" aria-label="Primary navigation">
         <a className="comic-brand" href="#top"><span>S</span><span className="brand-copy"><b>SUDARSHAN AI LABS</b><small>STORYBOOK</small></span></a>
         <div className="comic-links">
@@ -188,6 +206,29 @@ export default function Home() {
           <div className="hero-actions">
             <a className="pop-button cyan" href="#city">START THE STORY <b>↓</b></a>
             <a className="pop-button cream" href={serviceUrl} target="_blank" rel="noreferrer">FREE CONSULTATION ↗</a>
+          </div>
+          <div className="hero-keywords-bar" aria-label="Core Digital Marketing Capabilities">
+            <small>GROWTH PILLARS POWERED BY SUDARSHAN AI</small>
+            <div className="hero-keywords-list">
+              <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+                ⚡ Digital Marketing services
+              </a>
+              <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+                📍 Social Media Marketing in Lucknow
+              </a>
+              <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+                🔍 SEO &amp; Local Search
+              </a>
+              <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+                🎯 Lead Generation
+              </a>
+              <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+                🏆 best digital marketing services
+              </a>
+              <a className="keyword-badge" href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">
+                🏢 marketing agency
+              </a>
+            </div>
           </div>
         </div>
 
@@ -440,6 +481,41 @@ export default function Home() {
           </article>
         </div>
 
+        <section className="contact-sheet reveal" style={{ marginTop: "40px" }} aria-label="Sudarshan AI Box Visual Archive">
+          <div className="sheet-heading">
+            <span>BOX CLOUD VISUAL ARCHIVE</span>
+            <h3>MARKETING IN ACTION: SUDARSHAN AI VISUAL SHOWCASE</h3>
+            <p>Direct visuals and growth concepts from the official Box cloud repository.</p>
+          </div>
+          <div className="sheet-scroll">
+            <figure>
+              <span>BOX ASSET #01</span>
+              <img src={sitePath("/box-marketing/marketing-02.webp")} alt="Sudarshan AI Digital Marketing services and Strategy" loading="lazy" decoding="async" />
+              <figcaption>Comprehensive <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Digital Marketing services</a> in action.</figcaption>
+            </figure>
+            <figure>
+              <span>BOX ASSET #02</span>
+              <img src={sitePath("/box-marketing/marketing-05.webp")} alt="SEO and Local Discovery Engineering" loading="lazy" decoding="async" />
+              <figcaption>High-ranking <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SEO</a> and search discovery.</figcaption>
+            </figure>
+            <figure>
+              <span>BOX ASSET #03</span>
+              <img src={sitePath("/box-marketing/marketing-10.webp")} alt="Social Media Marketing in Lucknow with Sudarshan AI" loading="lazy" decoding="async" />
+              <figcaption>Engaging <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Social Media Marketing in Lucknow</a>.</figcaption>
+            </figure>
+            <figure>
+              <span>BOX ASSET #04</span>
+              <img src={sitePath("/box-marketing/marketing-19.webp")} alt="Lead Generation engineered by Lucknow Marketing Agency" loading="lazy" decoding="async" />
+              <figcaption>Engineered by our <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">marketing agency</a> for <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Lead Generation</a>.</figcaption>
+            </figure>
+            <figure>
+              <span>BOX ASSET #05</span>
+              <img src={sitePath("/box-marketing/marketing-20.webp")} alt="Best Digital Marketing Services for Indian Businesses" loading="lazy" decoding="async" />
+              <figcaption>The <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">best digital marketing services</a> for Indian MSMEs.</figcaption>
+            </figure>
+          </div>
+        </section>
+
         <div className="scene-footer">
           <a href="#trust">NEXT: WHY YOU CAN TRUST THIS GUIDE <span>→</span></a>
           <b>05 / 06</b>
@@ -527,6 +603,17 @@ export default function Home() {
         <div className="footer-brand-block">
           <a className="comic-brand" href="#top"><span>S</span><span className="brand-copy"><b>SUDARSHAN AI LABS</b><small>DIGITAL GROWTH STORYBOOK</small></span></a>
           <p>AI-powered digital growth insights for Indian MSMEs, created in Lucknow.</p>
+          <div className="footer-keyword-cloud" aria-label="Sudarshan AI Services">
+            <small>POPULAR AGENCY SEARCHES</small>
+            <div className="keyword-chips">
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Digital Marketing services ↗</a>
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Social Media Marketing in Lucknow ↗</a>
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">SEO ↗</a>
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">Lead Generation ↗</a>
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">best digital marketing services ↗</a>
+              <a href="https://sudarshan-ai.com/" target="_blank" rel="noreferrer">marketing agency ↗</a>
+            </div>
+          </div>
         </div>
         <div className="footer-cta-panel">
           <div className="footer-cta-heading"><small>CHOOSE YOUR NEXT MOVE</small><h2>EXPLORE. CONNECT. GROW.</h2></div>
