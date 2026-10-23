@@ -20,7 +20,9 @@ async function collect(dir) {
 const manifest = {};
 for (const path of await collect(publicDir)) {
   const raw = await readFile(path);
-  const digest = createHash("sha256").update(raw).update("webp-quality-72-v2").digest("hex").slice(0, 12);
+  const avif = ["ai-creativity.webp", "ai-city-concept.webp"].includes(basename(path));
+  const format = avif ? "avif" : "webp";
+  const digest = createHash("sha256").update(raw).update(avif ? "avif-quality-45-v1" : "webp-quality-72-v2").digest("hex").slice(0, 12);
   const metadata = await sharp(raw).metadata();
   const rotated = [5, 6, 7, 8].includes(metadata.orientation);
   const width = rotated ? metadata.height : metadata.width;
@@ -28,10 +30,13 @@ for (const path of await collect(publicDir)) {
   const widths = [...new Set([...([400, 800, 1200].filter(w => w < width)), Math.min(width, 1200)])].sort((a, b) => a - b);
   const variants = [];
   for (const w of widths) {
-    const filename = `${basename(path, extname(path))}-${digest}-${w}.webp`;
+    const filename = `${basename(path, extname(path))}-${digest}-${w}.${format}`;
     const target = join(output, filename);
     try { await stat(target); }
-    catch { await sharp(raw).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 72, effort: 4 }).toFile(target); }
+    catch {
+      const image = sharp(raw).rotate().resize({ width: w, withoutEnlargement: true });
+      await (avif ? image.avif({ quality: 45, effort: 4 }) : image.webp({ quality: 72, effort: 4 })).toFile(target);
+    }
     variants.push({ src: `/optimized/${filename}`, width: w });
   }
   manifest["/" + relative(publicDir, path).split("\\").join("/")] = { width, height, variants };
