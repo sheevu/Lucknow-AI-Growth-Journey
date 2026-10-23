@@ -1,13 +1,14 @@
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 import Link from "next/link";
-import { articleExcerpt, articleImage, formatArticleDate, getCategoryName, type BlogArticle } from "@/lib/blogs";
+import { formatArticleDate, type BlogArticleSummary } from "@/lib/blog-card";
 
-export function BlogArticleCard({ article, compact = false }: { article: BlogArticle; compact?: boolean }) {
-  const excerpt = articleExcerpt(article);
+export function BlogArticleCard({ article, compact = false }: { article: BlogArticleSummary; compact?: boolean }) {
+  const excerpt = article.excerpt;
   return (
     <article className={`library-card${compact ? " library-card-compact" : ""}`}>
       <Link className="library-card-image" href={`/blogs/${article.slug}/`} aria-label={`Read ${article.title}`}>
-        <img src={articleImage(article)} alt={article.coverAlt ?? article.title} loading="lazy" decoding="async" />
-        <span>{getCategoryName(article.category)}</span>
+        <ResponsiveImage src={article.image} alt={article.coverAlt ?? article.title} loading="lazy" decoding="async" />
+        <span>{article.categoryName}</span>
       </Link>
       <div className="library-card-body">
         <div className="library-card-meta">

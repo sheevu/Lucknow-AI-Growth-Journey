@@ -49,6 +49,7 @@ export default defineConfig(async () => {
       "process.env.NEXT_PUBLIC_SITE_ORIGIN": JSON.stringify(process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://blogs.vyapai.in"),
       "process.env.NEXT_PUBLIC_SITE_BASE_PATH": JSON.stringify(process.env.NEXT_PUBLIC_SITE_BASE_PATH || ""),
     },
+    build: { target: "es2022" },
     server: {
       host: "0.0.0.0",
       allowedHosts: ["terminal.local"],

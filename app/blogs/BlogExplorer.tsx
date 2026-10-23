@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { BlogArticleCard } from "@/components/BlogArticleCard";
-import type { BlogArticle, BlogCategory } from "@/lib/blogs";
+import type { BlogCategory } from "@/lib/blogs";
+import type { BlogArticleSummary } from "@/lib/blog-card";
 
-export function BlogExplorer({ items, categories }: { items: BlogArticle[]; categories: BlogCategory[] }) {
+export function BlogExplorer({ items, categories }: { items: BlogArticleSummary[]; categories: BlogCategory[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [limit, setLimit] = useState(18);

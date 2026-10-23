@@ -1,3 +1,5 @@
+import { ResponsiveImage } from "@/components/ResponsiveImage";
+import { articleSummary } from "@/lib/blogs";
 import React from "react";
 import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
@@ -91,7 +93,7 @@ function CategoryPage({ slug }: { slug: string }) {
         <h1>{category.name}</h1><p>{category.description}</p>
       </header>
       <section className="category-listing">
-        <div className="library-card-grid">{items.map((article) => <BlogArticleCard key={article.id} article={article} />)}</div>
+        <div className="library-card-grid">{items.map((article) => <BlogArticleCard key={article.id} article={articleSummary(article)} />)}</div>
         <div className="related-category-links"><b>EXPLORE RELATED CATEGORIES</b>{categories.filter((item) => item.slug !== slug).slice(0, 5).map((item) => <Link key={item.slug} href={`/blogs/${item.slug}/`}>{item.name} · {categoryCount(item.slug)}</Link>)}</div>
       </section>
       <BlogSiteFooter />
@@ -119,7 +121,7 @@ function ArticlePage({ slug }: { slug: string }) {
             <p className="article-deck">{firstParagraph}</p>
             <div className="article-byline"><span>LD</span><b>Lucknow AI Digital Journey<small>Editorial Desk</small></b><p><time>{formatArticleDate(article.date)}</time><span>{article.readingMinutes} min read</span><span>{article.wordCount.toLocaleString("en-IN")} words</span></p></div>
           </div>
-          <figure><img src={articleImage(article)} alt={article.coverAlt ?? article.title} fetchPriority="high" decoding="async" /><figcaption>{categoryName} · Archive story</figcaption></figure>
+          <figure><ResponsiveImage src={articleImage(article)} alt={article.coverAlt ?? article.title} fetchPriority="high" decoding="async" /><figcaption>{categoryName} · Archive story</figcaption></figure>
         </div>
       </header>
 
@@ -180,7 +182,7 @@ function ArticlePage({ slug }: { slug: string }) {
         </article>
       </div>
 
-      <section className="related-articles"><div className="library-section-heading"><span>RELATED ARTICLES</span><h2>KEEP EXPLORING</h2></div><div className="library-card-grid">{related.slice(0, 3).map((item) => <BlogArticleCard key={item.id} article={item} compact />)}</div></section>
+      <section className="related-articles"><div className="library-section-heading"><span>RELATED ARTICLES</span><h2>KEEP EXPLORING</h2></div><div className="library-card-grid">{related.slice(0, 3).map((item) => <BlogArticleCard key={item.id} article={articleSummary(item)} compact />)}</div></section>
       <BlogSiteFooter />
     </main>
   );

@@ -105,3 +105,9 @@ export function articleImage(article: BlogArticle) {
 export function categoryCount(slug: string) {
   return articles.filter((article) => article.category === slug).length;
 }
+
+// Only compact card fields cross the server/client boundary. Article bodies stay server-side.
+export function articleSummary(article: BlogArticle): import("./blog-card").BlogArticleSummary {
+  const { id, title, metaDescription, primaryKeyword, slug, category, date, status, indexable, readingMinutes, coverAlt } = article;
+  return { id, title, metaDescription, primaryKeyword, slug, category, date, status, indexable, readingMinutes, coverAlt, excerpt: articleExcerpt(article).slice(0, 175), categoryName: getCategoryName(category), image: articleImage(article) };
+}

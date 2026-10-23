@@ -22,7 +22,7 @@ a { color: inherit; text-decoration: none; }
 img { max-width: 100%; height: auto; }
 ::selection { color: white; background: var(--purple); }
 
-.ink-progress { position: fixed; z-index: 100; inset: 0 auto auto 0; height: 5px; background: linear-gradient(90deg,var(--orange),var(--pink),var(--purple),var(--cyan)); box-shadow: 0 2px 0 var(--ink); }
+.ink-progress { width: 100%; transform: scaleX(0); transform-origin: left; will-change: transform; position: fixed; z-index: 100; inset: 0 auto auto 0; height: 5px; background: linear-gradient(90deg,var(--orange),var(--pink),var(--purple),var(--cyan)); box-shadow: 0 2px 0 var(--ink); }
 .comic-nav { position: absolute; z-index: 20; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(20px,5vw,72px); }
 .comic-brand { display: flex; align-items: center; gap: 10px; color: var(--navy); font-size: 13px; letter-spacing: .04em; }
 .brand-copy { display: flex; flex-direction: column; gap: 2px; }
@@ -630,8 +630,8 @@ img { max-width: 100%; height: auto; }
 }
 
 /* Animated, responsive Google Maps footer feature */
-.footer-location { position: relative; isolation: isolate; grid-column: 1/-1; display: grid; grid-template-columns: minmax(240px,.7fr) minmax(0,1.3fr); align-items: center; gap: clamp(28px,5vw,70px); overflow: hidden; padding: clamp(30px,4vw,55px); border: 4px solid white; color: var(--ink); background: linear-gradient(120deg,var(--yellow),#ffb36f,var(--pink),var(--cyan),var(--yellow)); background-size: 300% 300%; box-shadow: 10px 10px 0 var(--orange); animation: location-shimmer 13s ease-in-out infinite; }
-.footer-location::before { content: ""; position: absolute; z-index: -1; inset: 0; opacity: .24; background-image: radial-gradient(var(--ink) 1.3px,transparent 1.3px); background-size: 16px 16px; animation: location-dots 18s linear infinite; }
+.footer-location { position: relative; isolation: isolate; grid-column: 1/-1; display: grid; grid-template-columns: minmax(240px,.7fr) minmax(0,1.3fr); align-items: center; gap: clamp(28px,5vw,70px); overflow: hidden; padding: clamp(30px,4vw,55px); border: 4px solid white; color: var(--ink); background: linear-gradient(120deg,var(--yellow),#ffb36f,var(--pink),var(--cyan),var(--yellow)); background-size: 300% 300%; box-shadow: 10px 10px 0 var(--orange);  }
+.footer-location::before { content: ""; position: absolute; z-index: -1; inset: 0; opacity: .24; background-image: radial-gradient(var(--ink) 1.3px,transparent 1.3px); background-size: 16px 16px;  }
 .footer-location::after { content: "↗"; position: absolute; z-index: -1; right: -35px; top: -75px; color: rgba(255,255,255,.34); font-family: Impact,"Arial Black",sans-serif; font-size: clamp(13rem,25vw,24rem); line-height: 1; transform: rotate(12deg); animation: location-orbit 8s ease-in-out infinite; }
 .location-copy { position: relative; z-index: 2; }
 .location-copy > small { display: block; margin-top: 22px; font-size: 9px; font-weight: 1000; letter-spacing: .17em; }
@@ -642,7 +642,7 @@ img { max-width: 100%; height: auto; }
 .location-copy > a:hover { color: var(--ink); background: white; transform: translate(3px,3px) rotate(-1deg); box-shadow: 2px 2px 0 var(--ink); }
 .location-copy > a b { font-size: 16px; transition: transform .2s ease; }.location-copy > a:hover b { transform: translate(3px,-3px); }
 .location-status { width: fit-content; display: flex; align-items: center; gap: 8px; padding: 8px 11px; border: 2px solid var(--ink); border-radius: 999px; color: white; background: var(--navy); font-size: 8px; font-weight: 1000; letter-spacing: .12em; box-shadow: 3px 3px 0 var(--ink); }
-.location-status i { width: 10px; height: 10px; border: 2px solid white; border-radius: 50%; background: #55e277; box-shadow: 0 0 0 0 rgba(85,226,119,.7); animation: location-pulse 1.7s ease-out infinite; }
+.location-status i { width: 10px; height: 10px; border: 2px solid white; border-radius: 50%; background: #55e277; box-shadow: 0 0 0 0 rgba(85,226,119,.7); animation: rss-pulse 1.7s ease-out infinite; }
 .location-map-shell { position: relative; min-width: 0; padding: 10px; border: 5px solid var(--ink); background: white; box-shadow: 12px 12px 0 var(--ink); transform: rotate(.65deg); transition: transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease; }
 .location-map-shell:hover { transform: translateY(-7px) rotate(-.3deg); box-shadow: 17px 17px 0 var(--purple); }
 .location-map-frame { position: relative; overflow: hidden; width: 100%; min-height: 330px; aspect-ratio: 16/9; border: 3px solid var(--ink); background: #d7e3d0; }

@@ -1,8 +1,9 @@
 "use client";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 import { sitePath } from "@/lib/site";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 
 export type MediumFeedArticle = {
   title: string;
@@ -24,6 +25,7 @@ type MediumRssWidgetProps = {
 };
 
 export function MediumRssWidget({ fallbackArticles, profileUrl }: MediumRssWidgetProps) {
+  const container = useRef<HTMLDivElement>(null);
   const [articles, setArticles] = useState(fallbackArticles);
   const [feedState, setFeedState] = useState<"loading" | "live" | "fallback">("loading");
   const [lastBuildDate, setLastBuildDate] = useState<string | null>(null);
@@ -46,9 +48,11 @@ export function MediumRssWidget({ fallbackArticles, profileUrl }: MediumRssWidge
   }, [fallbackArticles]);
 
   useEffect(() => {
-    // Feed state changes only after the asynchronous network request resolves.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    void loadFeed();
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { observer.disconnect(); void loadFeed(); }
+    }, { rootMargin: "300px" });
+    if (container.current) observer.observe(container.current);
+    return () => observer.disconnect();
   }, [loadFeed]);
 
   const statusText = feedState === "live" ? "LIVE FROM MEDIUM" : feedState === "loading" ? "SYNCING FEED" : "SHOWING SAVED COPY";
@@ -57,7 +61,7 @@ export function MediumRssWidget({ fallbackArticles, profileUrl }: MediumRssWidge
     : "The widget checks Medium whenever this page opens.";
 
   return (
-    <div className="rss-widget">
+    <div ref={container} className="rss-widget">
       <div className="rss-toolbar" aria-live="polite">
         <div className={`rss-status rss-status-${feedState}`}><span aria-hidden="true" /> <b>{statusText}</b><small>{updateText}</small></div>
         <div className="rss-actions">
@@ -72,7 +76,7 @@ export function MediumRssWidget({ fallbackArticles, profileUrl }: MediumRssWidge
         {articles.map((article, index) => (
           <article className={`medium-card medium-card-${index + 1} reveal`} key={article.url}>
             <div className="medium-card-top"><span>NO. {String(index + 1).padStart(2, "0")}</span><b>{article.topic}</b></div>
-            {article.image ? <img className="medium-card-image" src={article.image} alt="" loading="lazy" decoding="async" /> : null}
+            {article.image ? <ResponsiveImage className="medium-card-image" src={article.image} alt="" loading="lazy" decoding="async" /> : null}
             <time>{article.date}</time>
             <h3>{article.title}</h3>
             <p>{article.summary}</p>

@@ -86,7 +86,10 @@ const worker = {
     if (env.ASSETS && (/^\/(?:assets|box-covers|box-marketing|storyboard|blog-visuals|library|trends)\/|^\/(?:favicon\.svg|logo\.png|og\.png|file\.svg|globe\.svg|window\.svg|schema\.org\.jsonld|public_sitemap_enhanced\.xml)$/.test(localPath) || /\.(?:css|js|mjs|map|png|jpg|jpeg|webp|gif|svg|ico|woff2?|ttf)$/.test(localPath))) {
       const assetUrl = new URL(request.url);
       assetUrl.pathname = localPath;
-      return env.ASSETS.fetch(new Request(assetUrl, request));
+      const response = await env.ASSETS.fetch(new Request(assetUrl, request));
+      const headers = new Headers(response.headers);
+      if (response.ok) headers.set("cache-control", /^\/(assets|optimized)\//.test(localPath) ? "public, max-age=31536000, immutable" : "public, max-age=86400");
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
     }
 
     if (localPath === "/_vinext/image") {

@@ -45,9 +45,9 @@ test('the homepage preloads its eager hero once without preloading unrelated cov
   const head = html.match(/<head>([\s\S]*?)<\/head>/)[1];
   const hints = [...head.matchAll(/<link\b[^>]*rel="preload"[^>]*as="image"[^>]*>/g)];
   assert.equal(hints.length, 1);
-  assert.match(hints[0][0], /href="\/storyboard\/ai-creativity\.webp"/);
+  assert.match(hints[0][0], /imageSrcSet="[^"]*optimized\/ai-creativity-/i);
   assert.match(hints[0][0], /fetchPriority="high"/i);
-  const hero = html.match(/<img\b[^>]*src="\/storyboard\/ai-creativity\.webp"[^>]*>/)[0];
+  const hero = html.match(/<img\b[^>]*src="[^"]*optimized\/ai-creativity-[^"]*"[^>]*>/)[0];
   assert.match(hero, /loading="eager"/);
 });
 

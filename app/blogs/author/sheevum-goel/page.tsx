@@ -1,3 +1,4 @@
+import { articleSummary } from "@/lib/blogs";
 import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -36,7 +37,7 @@ export default function AuthorPage() {
         <p>Published from Lucknow, Uttar Pradesh by Vyapai, focusing on practical AI adoption, local SEO, retail modernisation, and measurable growth systems for MSMEs and small businesses across India.</p>
         <div><Link href="/blogs/">ALL ARTICLES ↗</Link><a href="https://blogs.vyapai.in/" target="_blank" rel="noreferrer">VYAPAI.IN ↗</a></div>
       </header>
-      <section className="author-article-list"><div className="library-section-heading"><span>LATEST ARTICLES</span><h2>RECENT CONTRIBUTIONS</h2></div><div className="library-card-grid">{latest.map((article) => <BlogArticleCard key={article.id} article={article} />)}</div><Link className="library-load-more" href="/blogs/">BROWSE ALL 140 ENTRIES →</Link></section>
+      <section className="author-article-list"><div className="library-section-heading"><span>LATEST ARTICLES</span><h2>RECENT CONTRIBUTIONS</h2></div><div className="library-card-grid">{latest.map((article) => <BlogArticleCard key={article.id} article={articleSummary(article)} />)}</div><Link className="library-load-more" href="/blogs/">BROWSE ALL 140 ENTRIES →</Link></section>
       <BlogSiteFooter />
     </main>
   );

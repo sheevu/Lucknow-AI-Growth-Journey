@@ -1,3 +1,4 @@
+import { articleSummary } from "@/lib/blogs";
 import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -80,7 +81,7 @@ export default function BlogsPage() {
 
       <section className="library-featured" id="featured">
         <div className="library-section-heading inverse"><span>EDITOR&apos;S BOARD</span><h2>FEATURED STORIES</h2><p>Three useful starting points from the complete archive.</p></div>
-        <div className="library-card-grid library-featured-grid">{featured.map((article) => <BlogArticleCard key={article.id} article={article} />)}</div>
+        <div className="library-card-grid library-featured-grid">{featured.map((article) => <BlogArticleCard key={article.id} article={articleSummary(article)} />)}</div>
       </section>
 
       <section className="library-categories" id="categories">
@@ -96,10 +97,10 @@ export default function BlogsPage() {
 
       <section className="library-latest" id="latest">
         <div className="library-section-heading"><span>RECENTLY PUBLISHED</span><h2>LATEST ARTICLES</h2></div>
-        <div className="library-card-grid">{latest.map((article) => <BlogArticleCard key={article.id} article={article} compact />)}</div>
+        <div className="library-card-grid">{latest.map((article) => <BlogArticleCard key={article.id} article={articleSummary(article)} compact />)}</div>
       </section>
 
-      <BlogExplorer items={articles} categories={categories} />
+      <BlogExplorer items={articles.map(articleSummary)} categories={categories} />
       <BlogSiteFooter />
     </main>
   );
