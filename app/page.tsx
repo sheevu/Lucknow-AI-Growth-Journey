@@ -1,3 +1,4 @@
+import { publisherSchema, schemaDate } from "@/lib/structured-data";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { siteUrl, sitePath, SITE_UPDATED_AT } from "@/lib/site";
 
@@ -54,25 +55,21 @@ const mediumArticles = [
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Lucknow's AI Growth Story: From Search Signals to Smarter MSMEs",
+  "@id": siteUrl("/#article"),
+  headline: "Lucknow's AI Growth Journey",
   description: "An expert-led, source-checked field guide to AI digital marketing, local SEO and practical growth systems for Lucknow MSMEs.",
-  datePublished: "2026-08-21",
+  datePublished: schemaDate("2026-08-21"),
   dateModified: SITE_UPDATED_AT,
-  mainEntityOfPage: siteUrl("/"),
+  mainEntityOfPage: { "@type": "WebPage", "@id": siteUrl("/") },
   url: siteUrl("/"),
   image: siteUrl("/og.png"),
   inLanguage: "en-IN",
   author: {
-    "@type": "Organization",
-    name: "Lucknow AI Digital Journey Editorial Desk",
-    url: siteUrl("/"),
+    "@type": "Person",
+    name: "Sheevum Goel",
+    url: founderUrl,
   },
-  publisher: {
-    "@type": "Organization",
-    "@id": "https://blogs.vyapai.in/#publisher",
-    name: "Vyapai",
-    url: "https://blogs.vyapai.in/",
-  },
+  publisher: publisherSchema,
   about: ["AI digital marketing", "local SEO", "Lucknow MSMEs", "Google Trends"],
 };
 
@@ -218,7 +215,7 @@ export default function Home() {
       <section className="trust-strip" aria-label="Article authorship and review information">
         <div className="author-avatar">SG</div>
         <div><small>WRITTEN & REVIEWED BY</small><h2>Sheevum Goel</h2><p>Founder, Sudarshan AI Labs · AI trainer & local growth strategist</p></div>
-        <div className="trust-meta"><span><b>Experience</b> Lucknow MSME-first lens</span><span><b>Method</b> Trends + official guidance</span><span><b>Updated</b> 29 August 2026</span></div>
+        <div className="trust-meta"><span><b>Experience</b> Lucknow MSME-first lens</span><span><b>Method</b> Trends + official guidance</span><span><b>Updated</b> 23 October 2026</span></div>
         <a className="content-cta compact-cta" href={founderUrl} target="_blank" rel="noreferrer"><span>Meet the expert</span><b>View author profile</b><i>↗</i></a>
       </section>
 

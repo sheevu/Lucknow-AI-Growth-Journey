@@ -1,3 +1,6 @@
+import { publisherSchema, schemaDate } from "@/lib/structured-data";
+import { SITE_ORIGIN, siteUrl } from "@/lib/site";
+import { articleImage, getArticle } from "@/lib/blogs";
 import blogData from "@/lib/blog-data.json";
 
 type SeoSchemaProps = {
@@ -6,35 +9,11 @@ type SeoSchemaProps = {
   categorySlug?: string;
 };
 
-const BASE = "https://blogs.vyapai.in";
+const BASE = siteUrl("/").replace(/\/$/, "");
 const PUBLISHER_ID = `${BASE}/#publisher`;
 const BLOG_ID = `${BASE}/#blog`;
 
-const publisher = {
-  "@type": "Organization",
-  "@id": PUBLISHER_ID,
-  "name": "Vyapai",
-  "alternateName": "Lucknow AI Digital Journey",
-  "url": `${BASE}/`,
-  "telephone": "+91-7080842220",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Lucknow",
-    "addressRegion": "Uttar Pradesh",
-    "postalCode": "226016",
-    "addressCountry": "IN",
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "India",
-  },
-  "logo": {
-    "@type": "ImageObject",
-    "url": `${BASE}/logo.png`,
-    "width": 512,
-    "height": 512,
-  },
-};
+const publisher = publisherSchema;
 
 const editorialAuthor = {
   "@type": "Organization",
@@ -46,7 +25,7 @@ function JsonLd({ data }: { data: unknown }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }
@@ -78,7 +57,7 @@ export function SeoSchema({
 
     const pageUrl = `${BASE}/blogs/${article.slug}/`;
     const modified =
-      article.dateModified || article.updatedAt || article.date || undefined;
+      schemaDate(article.dateModified || article.updatedAt || article.date);
 
     const schema = {
       "@context": "https://schema.org",
@@ -91,7 +70,7 @@ export function SeoSchema({
       "headline": article.seoTitle || article.title,
       "description": article.metaDescription || "",
       "url": pageUrl,
-      "datePublished": article.date || undefined,
+      "datePublished": schemaDate(article.date),
       "dateModified": modified,
       "author": editorialAuthor,
       "publisher": publisher,
@@ -106,11 +85,7 @@ export function SeoSchema({
         .filter(Boolean)
         .join(", "),
       "inLanguage": "en-IN",
-      "image": article.coverImage
-        ? article.coverImage.startsWith("http")
-          ? article.coverImage
-          : `${BASE}${article.coverImage}`
-        : undefined,
+      "image": new URL(articleImage(getArticle(articleSlug)!), SITE_ORIGIN).href,
       "audience": {
         "@type": "BusinessAudience",
         "audienceType": "MSMEs and small businesses in India",
@@ -128,6 +103,8 @@ export function SeoSchema({
     const items: Array<{ name: string; url: string }> = [
       { name: "Home", url: `${BASE}/` },
     ];
+
+    items.push({ name: "Blogs & Articles", url: `${BASE}/blogs/` });
 
     if (categorySlug) {
       const category = (blogData.categories as Array<{ slug: string; name: string }>).find(

@@ -51,3 +51,36 @@ test('serves box marketing visual assets', async () => {
   assert.equal(response.status, 200);
   assert.ok((await response.arrayBuffer()).byteLength > 1000);
 });
+
+
+test('schema dates include timezones and publishers have verified image information', async () => {
+  const paths = ['/', '/blogs/' + published[0].slug + '/', '/blogs/' + published.at(-1).slug + '/'];
+  const walk = (value) => {
+    if (!value || typeof value !== 'object') return;
+    for (const key of ['datePublished', 'dateModified']) {
+      if (value[key]) {
+        assert.match(value[key], /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/);
+        assert.ok(Number.isFinite(Date.parse(value[key])));
+      }
+    }
+    if (value['@id'] === expected + '/#publisher' && value.name) {
+      assert.equal(value.image, expected + '/og.png');
+      assert.ok(value.logo.url.startsWith(expected + '/'));
+      assert.ok(!value.address || value.address.streetAddress, 'Do not publish an incomplete postal address');
+    }
+    if (value['@type'] === 'BlogPosting') assert.ok(value.image, 'Use the visible article cover in schema');
+    for (const child of Object.values(value)) walk(child);
+  };
+  for (const path of paths) {
+    const response = await request(path);
+    const html = await response.text();
+    assert.ok(!/noindex/i.test(response.headers.get('x-robots-tag') || ''));
+    for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) walk(JSON.parse(match[1]));
+  }
+});
+
+test('www permanently redirects to the canonical hostname without losing the deep link', async () => {
+  const response = await worker.fetch(new Request('https://www.blogs.vyapai.in/blogs/?topic=seo'), env, ctx);
+  assert.equal(response.status, 308);
+  assert.equal(response.headers.get('location'), 'https://blogs.vyapai.in/blogs/?topic=seo');
+});

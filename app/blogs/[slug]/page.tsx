@@ -1,3 +1,4 @@
+import { schemaDate } from "@/lib/structured-data";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { articleSummary } from "@/lib/blogs";
 import React from "react";
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article",
       url: siteUrl(`/blogs/${article.slug}/`),
       publishedTime: article.date ?? undefined,
-      modifiedTime: article.dateModified || article.updatedAt || article.date || undefined,
+      modifiedTime: schemaDate(article.dateModified || article.updatedAt || article.date),
       authors: ["Lucknow AI Digital Journey Editorial Desk"],
       section: getCategoryName(article.category),
       images: [{ url: image, alt: article.coverAlt ?? article.title }],
@@ -119,7 +120,7 @@ function ArticlePage({ slug }: { slug: string }) {
             <div className="article-labels"><Link href={`/blogs/${article.category}/`}>{categoryName}</Link><span>POST #{article.id}</span>{!article.indexable && <b>{article.status === "draft" ? "DRAFT · NOINDEX" : "MANUAL REVIEW · NOINDEX"}</b>}</div>
             <h1>{article.title}</h1>
             <p className="article-deck">{firstParagraph}</p>
-            <div className="article-byline"><span>LD</span><b>Lucknow AI Digital Journey<small>Editorial Desk</small></b><p><time>{formatArticleDate(article.date)}</time><span>{article.readingMinutes} min read</span><span>{article.wordCount.toLocaleString("en-IN")} words</span></p></div>
+            <div className="article-byline"><span>LD</span><b>Lucknow AI Digital Journey<small>Editorial Desk</small></b><p><time dateTime={schemaDate(article.date)}>{formatArticleDate(article.date)}</time><span>{article.readingMinutes} min read</span><span>{article.wordCount.toLocaleString("en-IN")} words</span></p></div>
           </div>
           <figure><ResponsiveImage src={articleImage(article)} alt={article.coverAlt ?? article.title} fetchPriority="high" decoding="async" /><figcaption>{categoryName} · Archive story</figcaption></figure>
         </div>

@@ -32,6 +32,12 @@ interface ExecutionContext {
 const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+    // Consolidate www links onto the same canonical host, preserving deep links.
+    if (url.hostname === "www.blogs.vyapai.in") {
+      url.hostname = "blogs.vyapai.in";
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 308);
+    }
     if (SITE_BASE_PATH && url.pathname === SITE_BASE_PATH) {
       url.pathname += "/";
       return Response.redirect(url.toString(), 308);

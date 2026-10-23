@@ -1,3 +1,4 @@
+import { publisherSchema } from "@/lib/structured-data";
 import { siteUrl, sitePath } from "@/lib/site";
 import type { Metadata } from "next";
 import criticalStyles, { stylesVersion } from "virtual:critical-css";
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Lucknow AI Digital Journey Editorial Desk", url: siteUrl("/") }],
   creator: "Lucknow AI Digital Journey Editorial Desk",
   publisher: "Vyapai",
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   alternates: {
     canonical: siteUrl("/"),
   },
@@ -42,37 +44,21 @@ export const metadata: Metadata = {
   icons: { icon: siteUrl("/favicon.svg"), shortcut: siteUrl("/favicon.svg") },
 };
 
-const BASE = "https://blogs.vyapai.in";
+const BASE = siteUrl("/").replace(/\/$/, "");
 const PUBLISHER_ID = `${BASE}/#publisher`;
 const BLOG_ID = `${BASE}/#blog`;
 
 const siteSchema = {
   "@context": "https://schema.org",
   "@graph": [
+    publisherSchema,
     {
-      "@type": "Organization",
-      "@id": PUBLISHER_ID,
-      name: "Vyapai",
-      alternateName: "Lucknow AI Digital Journey",
-      url: `${BASE}/`,
-      telephone: "+91-7080842220",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Lucknow",
-        addressRegion: "Uttar Pradesh",
-        postalCode: "226016",
-        addressCountry: "IN",
-      },
-      areaServed: {
-        "@type": "Country",
-        name: "India",
-      },
-      logo: {
-        "@type": "ImageObject",
-        url: `${BASE}/logo.png`,
-        width: 512,
-        height: 512,
-      },
+      "@type": "WebSite",
+      "@id": siteUrl("/#website"),
+      name: "AI & Digital Marketing Tips for Indian Businesses",
+      url: siteUrl("/"),
+      inLanguage: "en-IN",
+      publisher: { "@id": PUBLISHER_ID },
     },
     {
       "@type": "Blog",
