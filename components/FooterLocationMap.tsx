@@ -8,6 +8,7 @@ export function FooterLocationMap() {
         <small>VISIT THE LAB</small>
         <h2 id="footer-location-title">FIND US<br /><em>ON THE MAP.</em></h2>
         <p>Nava Netra Neural Sudarshan AI Labs Private Limited</p>
+        <p className="registered-office"><strong>Registered office:</strong> C-469/C, Indira Nagar, Near HAL, Lucknow, Uttar Pradesh 226016, India.</p>
         <a href={directionsUrl} target="_blank" rel="noreferrer">OPEN DIRECTIONS <b>↗</b></a>
       </div>
       <div className="location-map-shell">

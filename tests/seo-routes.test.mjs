@@ -66,7 +66,8 @@ test('schema dates include timezones and publishers have verified image informat
     if (value['@id'] === expected + '/#publisher' && value.name) {
       assert.equal(value.image, expected + '/og.png');
       assert.ok(value.logo.url.startsWith(expected + '/'));
-      assert.ok(!value.address || value.address.streetAddress, 'Do not publish an incomplete postal address');
+      assert.equal(value.address.streetAddress, 'C-469/C, Indira Nagar, Near HAL');
+      assert.equal(value.address.postalCode, '226016');
     }
     if (value['@type'] === 'BlogPosting') assert.ok(value.image, 'Use the visible article cover in schema');
     for (const child of Object.values(value)) walk(child);

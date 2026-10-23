@@ -1,14 +1,23 @@
 import { siteUrl } from "@/lib/site";
 
 // Keep publisher identity consistent across the homepage and every article.
-// A complete street address has not been verified, so do not publish a partial one.
+// Registered office matches the published corporate record (CIN U62099UP2025OPC223943).
 export const publisherSchema = {
   "@type": "Organization",
   "@id": siteUrl("/#publisher"),
   name: "Vyapai",
+  legalName: "NAVA-NETRA NEURAL SUDARSHAN LABS (OPC) PRIVATE LIMITED",
   alternateName: "Lucknow AI Digital Journey",
   url: siteUrl("/"),
   telephone: "+91-7080842220",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "C-469/C, Indira Nagar, Near HAL",
+    addressLocality: "Lucknow",
+    addressRegion: "Uttar Pradesh",
+    postalCode: "226016",
+    addressCountry: "IN",
+  },
   areaServed: [
     { "@type": "Country", name: "India" },
     { "@type": "City", name: "Lucknow" },
