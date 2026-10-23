@@ -3,6 +3,7 @@
 import { siteUrl, sitePath, SITE_UPDATED_AT } from "@/lib/site";
 
 import { useEffect, useState } from "react";
+import { preload } from "react-dom";
 import { MediumRssWidget } from "@/components/MediumRssWidget";
 import { FooterLocationMap } from "@/components/FooterLocationMap";
 
@@ -120,6 +121,7 @@ const faqSchema = {
 };
 
 export default function Home() {
+  preload(sitePath("/storyboard/ai-creativity.webp"), { as: "image", fetchPriority: "high" });
   const [progress, setProgress] = useState(0);
   const [shareText, setShareText] = useState("SHARE STORY");
 
@@ -234,7 +236,7 @@ export default function Home() {
 
         <figure className="hero-panel">
           <span className="panel-label">COVER STORY</span>
-          <img src={sitePath("/storyboard/ai-creativity.webp")} alt="Comic artwork of an Indian AI creator using digital branding and content tools" fetchPriority="high" decoding="async" />
+          <img src={sitePath("/storyboard/ai-creativity.webp")} alt="Comic artwork of an Indian AI creator using digital branding and content tools" fetchPriority="high" loading="eager" decoding="async" />
           <figcaption>Creative direction: human judgement + AI-assisted execution.</figcaption>
           <i className="tape tape-a" /><i className="tape tape-b" />
         </figure>

@@ -4,6 +4,7 @@ import handler from "vinext/server/app-router-entry";
 import { SITE_BASE_PATH } from "../lib/site";
 import sitemap from "../app/sitemap";
 import robots from "../app/robots";
+import fullStyles from "../app/globals.css?inline";
 
 interface Env {
   ASSETS: Fetcher;
@@ -37,6 +38,11 @@ const worker = {
     }
     const localPath = SITE_BASE_PATH && url.pathname.startsWith(`${SITE_BASE_PATH}/`)
       ? url.pathname.slice(SITE_BASE_PATH.length) : url.pathname;
+    if (localPath === "/site-styles.css") {
+      return new Response(request.method === "HEAD" ? null : fullStyles, {
+        headers: { "content-type": "text/css; charset=utf-8", "cache-control": "public, max-age=3600", "x-content-type-options": "nosniff" },
+      });
+    }
     // Serve metadata files before framework slash normalization.
     if (localPath === "/sitemap.xml" || localPath === "/sitemap.xml/") {
       const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");

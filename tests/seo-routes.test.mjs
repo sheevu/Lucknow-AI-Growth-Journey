@@ -51,4 +51,3 @@ test('serves box marketing visual assets', async () => {
   assert.equal(response.status, 200);
   assert.ok((await response.arrayBuffer()).byteLength > 1000);
 });
-

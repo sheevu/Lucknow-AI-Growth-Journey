@@ -130,7 +130,7 @@ function ArticlePage({ slug }: { slug: string }) {
           <p><b>Category</b><Link href={`/blogs/${article.category}/`}>{categoryName}</Link></p>
           <p><b>Original status</b>{article.status === "draft" ? "Draft in archive" : `Published ${formatArticleDate(article.date)}`}</p>
           {article.mediumUrl && <a className="sidebar-link" href={article.mediumUrl} target="_blank" rel="noreferrer">View original Medium post ↗</a>}
-          
+
           <div className="sidebar-agency-box">
             <small>GROWTH ACCELERATOR</small>
             <h3>SUDARSHAN AI</h3>

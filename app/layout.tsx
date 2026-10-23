@@ -1,6 +1,6 @@
-import { siteUrl } from "@/lib/site";
+import { siteUrl, sitePath } from "@/lib/site";
 import type { Metadata } from "next";
-import "./globals.css";
+import criticalStyles, { stylesVersion } from "virtual:critical-css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl("/")),
@@ -40,7 +40,6 @@ export const metadata: Metadata = {
     images: [siteUrl("/og.png")],
   },
   icons: { icon: siteUrl("/favicon.svg"), shortcut: siteUrl("/favicon.svg") },
-  other: { "codex-preview": "development" },
 };
 
 const BASE = "https://blogs.vyapai.in";
@@ -108,12 +107,20 @@ const siteSchema = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-IN">
+      <head>
+        <link rel="preconnect" href="https://static.cloudflareinsights.com" crossOrigin="anonymous" />
+        <style id="critical-css" dangerouslySetInnerHTML={{ __html: criticalStyles }} />
+        <link data-site-styles="" rel="stylesheet" href={sitePath(`/site-styles.css?v=${stylesVersion}`)} media="print" suppressHydrationWarning />
+        <noscript><link rel="stylesheet" href={sitePath(`/site-styles.css?v=${stylesVersion}`)} /></noscript>
+      </head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }} />
         {children}
+        <script defer src={sitePath("/load-styles.js")} />
         {/* Cloudflare Web Analytics */}
         <script
           type="module"
+          defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "7e6fa3b1fd3a4f1b9e6946a1f15eac4d"}'
         />
