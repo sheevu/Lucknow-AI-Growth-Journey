@@ -5,8 +5,8 @@ import criticalStyles, { stylesVersion } from "virtual:critical-css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl("/")),
-  title: "Blogs & Articles for Lucknow AI Digital Journey | MSME India",
-  description: "Practical AI, digital marketing, SEO, automation, retail and growth guides for MSMEs and small businesses across India, published from Lucknow.",
+  title: "Lucknow’s AI Growth Journey | Sudarshan AI Labs",
+  description: "Explore AI, digital marketing, local SEO and business automation guides for Indian MSMEs, published from Lucknow by Sudarshan AI Labs.",
   keywords: [
     "MSME Growth in India",
     "Artificial Intelligence for Small Business",
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     canonical: siteUrl("/"),
   },
   openGraph: {
-    title: "Blogs & Articles for Lucknow AI Digital Journey | MSME India",
-    description: "Practical AI, digital marketing, SEO, automation, retail and growth guides for MSMEs and small businesses across India, published from Lucknow.",
+    title: "Lucknow’s AI Growth Journey | Sudarshan AI Labs",
+    description: "Explore AI, digital marketing, local SEO and business automation guides for Indian MSMEs, published from Lucknow by Sudarshan AI Labs.",
     type: "website",
     locale: "en_IN",
     url: siteUrl("/"),
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blogs & Articles for Lucknow AI Digital Journey | MSME India",
-    description: "Practical AI, digital marketing, SEO, automation, retail and growth guides for MSMEs and small businesses across India, published from Lucknow.",
+    title: "Lucknow’s AI Growth Journey | Sudarshan AI Labs",
+    description: "Explore AI, digital marketing, local SEO and business automation guides for Indian MSMEs, published from Lucknow by Sudarshan AI Labs.",
     images: [siteUrl("/og.png")],
   },
   icons: { icon: siteUrl("/favicon.svg"), shortcut: siteUrl("/favicon.svg") },

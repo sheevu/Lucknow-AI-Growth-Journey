@@ -85,3 +85,20 @@ test('www permanently redirects to the canonical hostname without losing the dee
   assert.equal(response.status, 308);
   assert.equal(response.headers.get('location'), 'https://blogs.vyapai.in/blogs/?topic=seo');
 });
+
+
+test('security headers allow the requested analytics and block plugin injection', async () => {
+  const response = await request('/');
+  const csp = response.headers.get('content-security-policy');
+  assert.ok(csp.includes("object-src 'none'"));
+  assert.ok(csp.includes("base-uri 'self'"));
+  assert.ok(csp.includes('https://analytics.ahrefs.com'));
+  assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+  assert.equal(response.headers.get('referrer-policy'), 'strict-origin-when-cross-origin');
+  const html = await response.text();
+  const head = html.slice(0, html.indexOf('</head>'));
+  const scripts = [...head.matchAll(/<script\b[^>]*src="https:\/\/analytics\.ahrefs\.com\/analytics\.js"[^>]*>/g)];
+  assert.equal(scripts.length, 1);
+  assert.ok(scripts[0][0].includes('data-key="yY8zwocFyre0v1coEaXe/Q"'));
+  assert.ok(scripts[0][0].includes('async'));
+});

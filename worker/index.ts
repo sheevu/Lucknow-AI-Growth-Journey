@@ -29,7 +29,7 @@ interface ExecutionContext {
 // dangerouslyAllowSVG: true in next.config.js and uncomment below:
 // const imageConfig: ImageConfig = { dangerouslyAllowSVG: true };
 
-const worker = {
+const appWorker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     // Consolidate www links onto the same canonical host, preserving deep links.
@@ -113,4 +113,28 @@ const worker = {
   },
 };
 
-export default worker;
+// Keep security headers consistent on pages, redirects, metadata and API responses.
+const policy = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://analytics.ahrefs.com https://static.cloudflareinsights.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https:",
+  "font-src 'self' data:",
+  "connect-src 'self' https://analytics.ahrefs.com https://cloudflareinsights.com https://*.cloudflareinsights.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com https://*.chatgpt.site",
+].join("; ");
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const response = await appWorker.fetch(request, env, ctx);
+    const headers = new Headers(response.headers);
+    headers.set("Content-Security-Policy", policy);
+    headers.set("X-Content-Type-Options", "nosniff");
+    headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  },
+};

@@ -762,3 +762,5 @@ section[id], header[id], [id="latest"], [id="categories"] { scroll-margin-top: 7
   .library-hero h1, .category-hero h1, .author-archive-hero h1 { font-size: clamp(2.8rem,15vw,5.7rem); }
   .article-hero h1 { font-size: clamp(2.4rem,11.5vw,5rem); }
 }
+
+.category-hero > p + p { margin-top: 18px; }

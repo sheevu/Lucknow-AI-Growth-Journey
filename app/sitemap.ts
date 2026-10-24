@@ -16,7 +16,7 @@ const latestDate = (dates: Array<string | undefined>) =>
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const defaultDate = normalizeDate(SITE_UPDATED_AT) || "2026-10-02";
-  const siteLastmod = latestDate(indexableArticles.map(articleLastmod)) || defaultDate;
+  const siteLastmod = latestDate([defaultDate, ...indexableArticles.map(articleLastmod)]) || defaultDate;
 
   const siteEntries: MetadataRoute.Sitemap = [
     { url: siteUrl("/"), lastModified: new Date(siteLastmod), changeFrequency: "weekly", priority: 1.0 },

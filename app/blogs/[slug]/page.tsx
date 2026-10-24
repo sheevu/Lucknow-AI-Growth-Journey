@@ -12,6 +12,7 @@ import { BlogSiteHeader } from "@/components/BlogSiteHeader";
 import { SeoSchema } from "@/components/SeoSchema";
 import {
   articleExcerpt,
+  articleDescription,
   articleImage,
   articles,
   boxMarketingImages,
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const category = getCategory(slug);
   if (category) {
     return {
-      title: `${category.name} Articles | Blogs and Articles for Lucknow AI Digital Journey`,
+      title: `${category.name} | Sudarshan AI Labs`,
       description: category.description,
       alternates: { canonical: siteUrl(`/blogs/${category.slug}/`) },
       openGraph: { title: `${category.name} Articles`, description: category.description, type: "website", url: siteUrl(`/blogs/${category.slug}/`) },
@@ -49,15 +50,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!article) return {};
   const image = new URL(articleImage(article), siteUrl("/")).href;
   return {
-    title: article.seoTitle || article.title,
-    description: article.metaDescription,
+    title: !article.indexable && (article.seoTitle || article.title).length < 20 ? `${article.title} | Archive review | Sudarshan AI Labs` : article.seoTitle || article.title,
+    description: articleDescription(article),
     keywords: [article.primaryKeyword, ...(article.secondaryKeywords || [])],
     authors: [{ name: "Lucknow AI Digital Journey Editorial Desk", url: siteUrl("/") }],
     alternates: { canonical: siteUrl(`/blogs/${article.slug}/`) },
     robots: article.indexable ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: article.seoTitle || article.title,
-      description: article.metaDescription,
+      description: articleDescription(article),
       type: "article",
       url: siteUrl(`/blogs/${article.slug}/`),
       publishedTime: article.date ?? undefined,
@@ -66,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       section: getCategoryName(article.category),
       images: [{ url: image, alt: article.coverAlt ?? article.title }],
     },
-    twitter: { card: "summary_large_image", title: article.seoTitle || article.title, description: article.metaDescription, images: [image] },
+    twitter: { card: "summary_large_image", title: article.seoTitle || article.title, description: articleDescription(article), images: [image] },
   };
 }
 
@@ -92,8 +93,10 @@ function CategoryPage({ slug }: { slug: string }) {
         <nav className="library-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span>›</span><Link href="/blogs/">Blogs &amp; Articles</Link><span>›</span><b>{category.name}</b></nav>
         <span className="library-kicker">CATEGORY · {items.length} ARTICLES</span>
         <h1>{category.name}</h1><p>{category.description}</p>
+        {category.slug === "technology-security" && <p>Start with the guide that matches your next task: protecting an account, recovering access, or choosing a digital tool. Each article explains the steps, the limits of the feature, and the questions to ask before sharing information. These guides help small business owners and everyday users make informed choices about technology and online security.</p>}
       </header>
-      <section className="category-listing">
+      <section className="category-listing" aria-labelledby="category-articles-title">
+        <div className="library-section-heading"><span>TOPIC LIBRARY</span><h2 id="category-articles-title">Articles on {category.name}</h2></div>
         <div className="library-card-grid">{items.map((article) => <BlogArticleCard key={article.id} article={articleSummary(article)} />)}</div>
         <div className="related-category-links"><b>EXPLORE RELATED CATEGORIES</b>{categories.filter((item) => item.slug !== slug).slice(0, 5).map((item) => <Link key={item.slug} href={`/blogs/${item.slug}/`}>{item.name} · {categoryCount(item.slug)}</Link>)}</div>
       </section>
@@ -154,7 +157,8 @@ function ArticlePage({ slug }: { slug: string }) {
             const visualBreakpoint = Math.min(2, Math.max(1, Math.floor(article.blocks.length / 3)));
             const inlineVisual = index === visualBreakpoint && boxMarketingImages.length > 0 ? (
               <figure key="box-marketing-visual" className="article-inline-visual">
-                <img
+                <ResponsiveImage
+                  sizes="(max-width: 1050px) calc(100vw - 48px), 760px"
                   src={boxMarketingImages[(article.id * 7) % boxMarketingImages.length]}
                   alt={`${article.title} - Sudarshan AI Marketing Visual`}
                   loading="lazy"

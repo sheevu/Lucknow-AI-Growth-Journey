@@ -98,6 +98,19 @@ export function articleExcerpt(article: BlogArticle) {
   return paragraph?.text ?? article.metaDescription;
 }
 
+// Use the source's own words rather than placeholder quotes in search previews.
+export function articleDescription(article: BlogArticle) {
+  const current = article.metaDescription.replace(/\s+/g, " ").trim();
+  if (Array.from(current).length >= 70 && Array.from(current).length <= 165) return current;
+  if (!article.indexable) return `Archived entry: ${article.title}. This source is awaiting editorial review and is excluded from search indexing.`.slice(0, 160);
+  const source = article.blocks.filter((block): block is Extract<BlogBlock, { text: string }> => block.type === "paragraph")
+    .map(block => block.text.replace(/https?:\/\/\S+/g, "").replace(/\s+/g, " ").trim()).join(" ");
+  const description = `${article.title}. ${source}`.replace(/\s+/g, " ");
+  if (description.length <= 160) return description;
+  const excerpt = description.slice(0, 157).replace(/\s+\S*$/, "").replace(/[.,;:!?—–-]+$/, "");
+  return `${excerpt}…`;
+}
+
 export function articleImage(article: BlogArticle) {
   return sitePath(article.coverImage ?? categoryImages[article.category] ?? "/storyboard/ai-creativity.webp");
 }
@@ -109,5 +122,5 @@ export function categoryCount(slug: string) {
 // Only compact card fields cross the server/client boundary. Article bodies stay server-side.
 export function articleSummary(article: BlogArticle): import("./blog-card").BlogArticleSummary {
   const { id, title, metaDescription, primaryKeyword, slug, category, date, status, indexable, readingMinutes, coverAlt } = article;
-  return { id, title, metaDescription, primaryKeyword, slug, category, date, status, indexable, readingMinutes, coverAlt, excerpt: articleExcerpt(article).slice(0, 175), categoryName: getCategoryName(category), image: articleImage(article) };
+  return { id, title, metaDescription: articleDescription(article), primaryKeyword, slug, category, date, status, indexable, readingMinutes, coverAlt, excerpt: articleExcerpt(article).slice(0, 175), categoryName: getCategoryName(category), image: articleImage(article) };
 }

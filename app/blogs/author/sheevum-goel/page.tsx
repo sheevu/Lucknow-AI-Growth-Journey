@@ -10,7 +10,7 @@ import { articles } from "@/lib/blogs";
 export const metadata: Metadata = {
   title: "Editorial Desk | Blogs and Articles for Lucknow AI Digital Journey",
   description: "Articles published by the Lucknow AI Digital Journey Editorial Desk on AI adoption, digital marketing, MSMEs, Indian retail and business growth.",
-  alternates: { canonical: siteUrl("/blogs/") },
+  alternates: { canonical: siteUrl("/blogs/author/sheevum-goel/") },
   robots: { index: false, follow: true },
 };
 
@@ -20,7 +20,7 @@ export default function AuthorPage() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Lucknow AI Digital Journey Editorial Desk",
-    url: siteUrl("/blogs/"),
+    url: siteUrl("/blogs/author/sheevum-goel/"),
     publisher: {
       "@type": "Organization",
       "@id": "https://blogs.vyapai.in/#publisher",

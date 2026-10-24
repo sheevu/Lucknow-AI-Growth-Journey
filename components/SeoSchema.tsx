@@ -1,6 +1,6 @@
 import { publisherSchema, schemaDate } from "@/lib/structured-data";
 import { SITE_ORIGIN, siteUrl } from "@/lib/site";
-import { articleImage, getArticle } from "@/lib/blogs";
+import { articleImage, articleDescription, getArticle } from "@/lib/blogs";
 import blogData from "@/lib/blog-data.json";
 
 type SeoSchemaProps = {
@@ -68,7 +68,7 @@ export function SeoSchema({
         "@id": pageUrl,
       },
       "headline": article.seoTitle || article.title,
-      "description": article.metaDescription || "",
+      "description": articleDescription(getArticle(articleSlug)!),
       "url": pageUrl,
       "datePublished": schemaDate(article.date),
       "dateModified": modified,

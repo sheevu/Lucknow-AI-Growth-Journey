@@ -215,7 +215,7 @@ export default function Home() {
       <section className="trust-strip" aria-label="Article authorship and review information">
         <div className="author-avatar">SG</div>
         <div><small>WRITTEN & REVIEWED BY</small><h2>Sheevum Goel</h2><p>Founder, Sudarshan AI Labs · AI trainer & local growth strategist</p></div>
-        <div className="trust-meta"><span><b>Experience</b> Lucknow MSME-first lens</span><span><b>Method</b> Trends + official guidance</span><span><b>Updated</b> 23 October 2026</span></div>
+        <div className="trust-meta"><span><b>Experience</b> Lucknow MSME-first lens</span><span><b>Method</b> Trends + official guidance</span><span><b>Updated</b> 24 October 2026</span></div>
         <a className="content-cta compact-cta" href={founderUrl} target="_blank" rel="noreferrer"><span>Meet the expert</span><b>View author profile</b><i>↗</i></a>
       </section>
 
