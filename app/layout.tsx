@@ -94,6 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en-IN">
       <head>
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="yY8zwocFyre0v1coEaXe/Q" async />
         <link rel="preconnect" href="https://static.cloudflareinsights.com" crossOrigin="anonymous" />
         <style id="critical-css" dangerouslySetInnerHTML={{ __html: criticalStyles }} />
         <link data-site-styles="" rel="stylesheet" href={sitePath(`/site-styles.css?v=${stylesVersion}`)} media="print" suppressHydrationWarning />
